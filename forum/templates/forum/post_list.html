@@ -1,0 +1,34 @@
+{% if not user.is_anonymous %}
+    Welcome {{ user.username }}! <br>
+    <a href="{% url "logout" %}">Logout</a>
+{% else %}
+    <a href="{% url "login" %}">Login</a><br>
+    <a href="{% url "register" %} ">Register</a>
+{% endif %}
+
+<br />
+
+<a href="{% url "forum:create" %}"><button>Add new post</button></a>
+
+<hr />
+
+{% for object in object_list %}
+    Name: 
+        {% if object.author %}
+            {{ object.author | title }}
+        {% else %}
+            Anonymous
+        {% endif %}
+    <br />
+    Time of posting: {{ object.created_on }} <br />
+    {% if object.created_on != object.last_modified %}
+        Last modified: {{ object.last_modified }} <br />
+    {% endif %}
+    <hr>
+    {{ object.post | truncatewords:3}} <br />
+
+    <a href="{% url "forum:detail" object.slug %}">Read more</a>
+
+    <br />
+    <br />
+{% endfor %}

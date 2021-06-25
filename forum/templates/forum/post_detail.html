@@ -1,0 +1,14 @@
+{% if object.active %}
+    Name: {{ object.author | title }} <br />
+    Time of posting: {{ object.created_on }} <br />
+    {% if object.created_on != object.last_modified %}
+        Last modified: {{ object.last_modified }} <br />
+    {% endif %}
+    <hr>
+    {{ object.post }} <br />
+
+    <a href="{% url "forum:edit" object.id %}">Edit</a>
+    <a href="{% url "forum:delete" object.id %}">Delete</a>
+{% else %}
+    This post have been deleted.
+{% endif %}
